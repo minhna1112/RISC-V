@@ -95,7 +95,9 @@ always @ (*) begin
     if (rst)
         MemAddr_o <= 32'b0;
     else begin
-        if (ALUop_i == 5'b1010x)  // lw or sw
+        if (ALUop_i == 5'b10100)  // lw or sw
+            MemAddr_o <= MemAddr_i;
+        else if (ALUop_i == 5'b10101)
             MemAddr_o <= MemAddr_i;
         else
             MemAddr_o <= 32'b0;
@@ -109,7 +111,9 @@ always @ (*) begin
     if (rst)
         MemCE_o <= 1'b0;
     else begin
-        if (ALUop_i == 5'b1010x)  // lw or sw
+        if (ALUop_i == 5'b10100)  // lw
+            MemCE_o <= 1'b1;
+        else if (ALUop_i == 5'b10101)  // sw
             MemCE_o <= 1'b1;
         else
             MemCE_o <= 1'b0;
